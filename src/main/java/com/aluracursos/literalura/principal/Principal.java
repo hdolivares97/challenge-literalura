@@ -78,7 +78,7 @@ public class Principal {
             var tituloABuscar = libroBuscado.titulo();
             Optional<Libro> tituloBuscado = repositorio.findByTitulo(tituloABuscar);
             if (tituloBuscado.isPresent()) {
-                System.out.println("No se puede registrar el libro más de una vez");
+                    System.out.println("No se puede registrar el libro más de una vez");
             } else {
                 Libro libro = new Libro(libroBuscado);
                 repositorio.save(libro);
