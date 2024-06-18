@@ -32,7 +32,5 @@ public class LiteraluraApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Principal principal = new Principal(repository, autorRepository);
 		principal.muestraElMenu();
-
-
 	}
 }

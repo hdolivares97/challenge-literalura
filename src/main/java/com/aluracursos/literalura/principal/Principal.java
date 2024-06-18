@@ -6,7 +6,9 @@ import com.aluracursos.literalura.repository.LibroRepository;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
@@ -67,12 +69,27 @@ public class Principal {
         var titulo = teclado.nextLine();
 
         String json = consumoAPI.obtenerDatos(URL_BASE + titulo.replace(" ", "+"));
-        //System.out.println(json);
-        DatosLibro libroBuscado = conversor.obtenerDatos(json, Datos.class).resultados().get(0);
-        Libro libro = new Libro(libroBuscado);
-        repositorio.save(libro);
-//      System.out.println(libroBuscado);
-        System.out.println(libro);
+        System.out.println(json);
+        if (json.equalsIgnoreCase("{\"count\":0,\"next\":null,\"previous\":null,\"results\":[]}")) {
+            System.out.println("Libro no encontrado");
+        } else {
+            DatosLibro libroBuscado = conversor.obtenerDatos(json, Datos.class).resultados().get(0);
+            //System.out.println(libroBuscado.titulo());
+            var tituloABuscar = libroBuscado.titulo();
+            Optional<Libro> tituloBuscado = repositorio.findByTitulo(tituloABuscar);
+            if (tituloBuscado.isPresent()) {
+                System.out.println("No se puede registrar el libro más de una vez");
+            } else {
+                Libro libro = new Libro(libroBuscado);
+                repositorio.save(libro);
+                System.out.println(libro);
+            }
+        }
+        //DatosLibro libroBuscado = conversor.obtenerDatos(json, Datos.class).resultados().get(0);
+        //System.out.println(libroBuscado);
+        //Libro libro = new Libro(libroBuscado);
+        //repositorio.save(libro);
+        //System.out.println(libro);
     }
 
     public void mostrarLibrosBuscados(){

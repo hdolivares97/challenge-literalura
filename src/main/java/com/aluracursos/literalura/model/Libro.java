@@ -47,7 +47,7 @@ public class Libro {
                 "\n Titulo:" + titulo +
                         "\n Autor:" + listaAutores +
                         "\n Idioma:" + idioma +
-                        "\n numeroDeDescargas:" + numeroDeDescargas +
+                        "\n Número de descargas:" + numeroDeDescargas +
                 "\n ------------------------------- \n \n";
     }
 
